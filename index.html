@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Saket Gupta Yakkala | Cyber Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--fg:#a3a3a3;--hi:#fff;--mut:#737373;--em:#34d399;--bl:#60a5fa;--pu:#a78bfa;--line:#262626;--panel:rgba(10,10,10,.65);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:'Ubuntu Mono',ui-monospace,Menlo,monospace;overflow-x:hidden;font-size:16px}
+h1,h2,h3,p{margin:0}
+.glass{background:var(--panel);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.07);box-shadow:0 4px 30px rgba(0,0,0,.5);border-radius:14px;position:relative;z-index:2}
+#bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;animation:hue 45s linear infinite}
+.blob{position:absolute;top:0;left:0;border-radius:50%;filter:blur(110px);opacity:.42;width:42vmax;height:42vmax}
+.b1{background:#3b82f6;animation:d1 42s ease-in-out infinite alternate}
+.b2{background:#8b5cf6;animation:d2 50s ease-in-out infinite alternate}
+.b3{background:#10b981;animation:d3 45s ease-in-out infinite alternate}
+.b4{background:#ef4444;animation:d4 55s ease-in-out infinite alternate;width:34vmax;height:34vmax}
+.b5{background:#eab308;animation:d5 47s ease-in-out infinite alternate;width:30vmax;height:30vmax}
+@keyframes hue{to{filter:hue-rotate(360deg)}}
+@keyframes d1{0%{transform:translate(-10vw,-10vh)}50%{transform:translate(70vw,20vh)}100%{transform:translate(30vw,70vh)}}
+@keyframes d2{0%{transform:translate(80vw,-15vh)}50%{transform:translate(10vw,40vh)}100%{transform:translate(60vw,80vh)}}
+@keyframes d3{0%{transform:translate(20vw,80vh)}50%{transform:translate(85vw,50vh)}100%{transform:translate(-10vw,10vh)}}
+@keyframes d4{0%{transform:translate(50vw,-20vh)}50%{transform:translate(-15vw,60vh)}100%{transform:translate(80vw,70vh)}}
+@keyframes d5{0%{transform:translate(-15vw,60vh)}50%{transform:translate(45vw,-10vh)}100%{transform:translate(90vw,30vh)}}
+.grad{background:linear-gradient(90deg,#60a5fa,#a78bfa,#34d399,#f87171,#facc15,#60a5fa);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gm 14s linear infinite}
+@keyframes gm{to{background-position:300% 0}}
+.hero{padding:28px 32px;margin-bottom:20px;text-align:center}
+.hero .eyebrow{color:var(--mut);font-size:13px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+.hero h2{font-size:clamp(28px,6vw,46px);font-weight:700;line-height:1.15;margin-bottom:12px}
+.hero p.d{color:#d4d4d4;max-width:620px;margin:0 auto;line-height:1.6;font-size:15px}
+.hero code{color:var(--em);background:rgba(255,255,255,.07);padding:1px 6px;border-radius:4px}
+.glass{transition:border-color .3s,box-shadow .3s}
+.glass:hover{border-color:rgba(255,255,255,.14)}
+@keyframes blink{50%{opacity:0}}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+@keyframes marq{from{transform:translateX(100%)}to{transform:translateX(-150%)}}
+.fade{animation:fade .4s ease-out}
+#boot{position:fixed;inset:0;z-index:50;background:#000;padding:16px;color:#d4d4d4;overflow:hidden}
+#boot .l{display:flex;gap:12px}
+.cur{display:inline-block;width:10px;height:18px;background:#d4d4d4;animation:blink 1s linear infinite;margin-top:8px}
+#app{display:none;position:relative;min-height:100%;padding:32px 16px 64px;flex-direction:column;align-items:center}
+.wrap{width:100%;max-width:1000px;position:relative;z-index:2}
+header{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:28px}
+header h1{color:var(--hi);font-size:28px;letter-spacing:.04em}
+.sub{color:var(--em)}
+.btn{background:rgba(23,23,23,.7);border:1px solid #404040;color:var(--mut);padding:8px 16px;border-radius:6px;font:inherit;cursor:pointer;transition:.2s}
+.btn:hover{color:#fff}
+#term{height:380px;display:flex;flex-direction:column;overflow:hidden;margin-bottom:28px;font-size:15px}
+.tbar{display:flex;align-items:center;padding:8px 16px;border-bottom:1px solid var(--line);background:rgba(26,27,38,.8)}
+.dots{display:flex;gap:8px;width:48px}.dots i{width:12px;height:12px;border-radius:50%}
+.tbar span{flex:1;text-align:center;font-size:12px;color:#a3a3a3}
+#out{flex:1;overflow-y:auto;padding:16px;line-height:1.6}
+.row{margin-bottom:8px;word-break:break-word}
+.p{color:var(--em);font-weight:700;margin-right:8px;white-space:nowrap}
+.inl{display:flex}
+.inl .box{position:relative;flex:1;display:flex;align-items:center;overflow:hidden}
+#inp{flex:1;width:100%;background:transparent;border:0;outline:0;color:#e5e5e5;font:inherit;caret-color:var(--em);position:relative;z-index:2}
+#hint{position:absolute;inset:0;display:flex;align-items:center;pointer-events:none;overflow:hidden}
+#hint span{white-space:nowrap;font-style:italic;color:rgba(4,120,87,.7);animation:marq 12s linear infinite}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.c-e{color:var(--em)}.c-r{color:#ef4444}.c-p{color:#c084fc}.c-b{color:var(--bl);font-weight:700}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(min-width:760px){.cards{grid-template-columns:repeat(5,1fr)}}
+.card{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 8px;color:#d4d4d4;font:inherit;cursor:pointer;transition:.3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 0 20px rgba(16,185,129,.2);border-color:rgba(16,185,129,.4)}
+.card svg{width:28px;height:28px;transition:transform .3s}.card:hover svg{transform:scale(1.1)}
+.view{padding:32px}
+.view h2{color:#fff;font-size:24px;margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.view h2 svg{width:24px;height:24px}
+.txt{color:#d4d4d4;line-height:1.7;font-size:15px}
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;background:repeating-linear-gradient(45deg,#0a0a0a,#0a0a0a 10px,#111 10px,#111 20px);border:2px dashed #404040;border-radius:14px;color:#6b7280;font-size:12px;padding:8px;transition:.3s;overflow:hidden}
+.ph:hover{border-color:var(--em);color:var(--em)}
+.ph svg{width:34px;height:34px}
+.ph.av{width:200px;height:200px;flex-shrink:0}
+.ph.wide{width:100%;aspect-ratio:16/9;margin-bottom:16px}
+.ph.sq{aspect-ratio:1/1}
+.who{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;justify-content:center}
+.who>div{flex:1;min-width:260px;display:flex;flex-direction:column;gap:16px}
+.who h3{color:#fff;font-size:30px}
+.mini{border:1px solid var(--line);background:rgba(0,0,0,.5);border-radius:8px;padding:16px}
+.mini h4{margin:0 0 8px;color:#a3a3a3;font-size:13px}
+.mini ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px;color:#d4d4d4;font-size:14px}
+.mini li:before{content:"› ";color:var(--bl)}
+.tl{margin-left:16px;border-left:1px solid #404040;display:flex;flex-direction:column;gap:32px}
+.tl>div{position:relative;padding-left:32px}
+.tl>div:before{content:"";position:absolute;left:-8px;top:4px;width:15px;height:15px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+.tl h3{color:#fff;font-size:20px}.tl .m{color:#a3a3a3;font-size:14px;margin-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.proj{border:1px solid var(--line);background:rgba(0,0,0,.4);border-radius:10px;padding:20px;transition:.2s}
+.proj:hover{border-color:rgba(168,85,247,.5)}
+.proj h3{color:#fff;font-size:18px;margin-bottom:8px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.tags span{background:rgba(88,28,135,.25);color:#d8b4fe;font-size:12px;padding:3px 8px;border-radius:4px}
+.proj{cursor:pointer}.proj:hover{transform:translateY(-3px)}
+.proj .more{margin-top:14px;color:var(--em);font-size:14px}
+body.detail-mode .hero,body.detail-mode #term{display:none}
+.detail{padding:clamp(20px,4vw,48px)}
+.detail .ph.big{margin:24px 0;border-radius:16px}
+.dgrid{display:grid;grid-template-columns:1fr;gap:32px}
+@media(min-width:800px){.dgrid{grid-template-columns:2fr 1fr}}
+.dgrid h3{color:#fff;font-size:20px;margin:20px 0 8px}.dgrid h3:first-child{margin-top:0}
+.dgrid ul{padding-left:20px;margin:0}.dgrid li{margin-bottom:6px}
+.skills{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:700px){.skills{grid-template-columns:repeat(4,1fr)}}
+.skills div{border:1px solid var(--line);background:rgba(23,23,23,.5);padding:12px;text-align:center;color:var(--em);border-radius:6px;transition:.2s}
+.skills div:hover{background:#262626}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.links a{color:var(--em);border:1px solid #404040;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:14px}
+.links a:hover{border-color:var(--em);background:rgba(16,185,129,.1)}
+.center{text-align:center}
+.foot{margin-top:40px;text-align:center;font-size:12px;color:#525252;position:relative;z-index:2}
+</style>
+</head>
+<body>
+<div id="boot"><div id="bl"></div><div class="cur"></div></div>
+
+<div id="app">
+  <div id="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div><div class="blob b5"></div></div>
+  <div class="wrap">
+    <header>
+      <div><h1 class="grad">Saket Gupta Yakkala</h1><p class="sub">CS at UCI &middot; Cybersecurity</p></div>
+      <button class="btn" id="home" style="display:none">cd ~ (Return Home)</button>
+    </header>
+
+    <section class="glass hero"><p class="eyebrow">// hello, world</p><h2 class="grad">Welcome to my website</h2><p class="d">I'm Saket, a CS student at UC Irvine into cybersecurity. This site works like a Linux terminal: type <code>help</code> in the box below, or just click a card under it to explore.</p></section>
+
+    <div class="glass" id="term">
+      <div class="tbar"><div class="dots"><i style="background:#ef4444"></i><i style="background:#eab308"></i><i style="background:#22c55e"></i></div><span>saket@saket's-website:~</span><div style="width:48px"></div></div>
+      <div id="out">
+        <div class="row">Welcome to Saket OS v1.0.0 (GNU/Linux 5.15.0-101-generic x86_64)</div>
+        <div class="row">Type "help" to see available commands or use the dashboard below.</div>
+      </div>
+      <div class="inl" style="padding:0 16px 14px"><span class="p">saket@saket's-website:~$</span>
+        <div class="box"><input id="inp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off"><div id="hint"><span>find the secret blog... hint: what says meow?</span></div></div>
+      </div>
+    </div>
+
+    <div id="view"></div>
+  </div>
+  <div class="foot">&copy; 2026 Saket Gupta Yakkala &middot; built with caffeine &amp; Linux</div>
+</div>
+
+<script>
+const I={
+ user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
+ folder:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+ code:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>',
+ act:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+ mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+ img:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>'
+};
+const ph=(label,cls)=>`<div class="ph ${cls||''}">${I.img}<span>${label}</span></div>`;
+
+/* ===== EDIT YOUR CONTENT HERE ===== */
+const projects=[
+ {t:'Active Directory Homelab',tech:['Windows Server','AD DS','pfSense'],d:'Built a virtual enterprise environment to understand domain controllers, Group Policy Objects, and network segregation.',img:'PROJECT SCREENSHOT 1',
+  long:'A self-hosted virtual enterprise network used to practice both administration and attack/defense. It models a small company with a domain controller, workstations, and a firewall separating network segments.',
+  built:['Deployed a Windows Server domain controller with AD DS, DNS, and DHCP','Created users, groups, OUs, and Group Policy Objects','Segmented the network with pfSense firewall rules and VLANs','Joined Windows clients to the domain and tested policy enforcement'],
+  learned:'How identity, policy, and network boundaries work together, and why misconfigured permissions are such a common attack path.',
+  links:[['GitHub repo','#'],['Write-up','#']]},
+ {t:'Automated Enumeration Script',tech:['Bash','Nmap','Python'],d:'Developed a custom script to automate initial network reconnaissance and parse results into readable HTML reports.',img:'PROJECT SCREENSHOT 2',
+  long:'A recon helper that runs the repetitive first steps of a scan, then turns raw tool output into a clean report so findings are easy to review and share.',
+  built:['Wrapped Nmap scans in a Bash script with configurable targets and ports','Parsed XML output with Python to pull hosts, open ports, and services','Generated a styled HTML report with a summary table','Added basic error handling and logging'],
+  learned:'How to automate a workflow end to end and present technical results clearly. Only run it against systems you own or have permission to test.',
+  links:[['GitHub repo','#'],['Sample report','#']]}
+];
+const skills=['Python','C++','Java','Linux/Bash','Network Analysis','System Hardening','Git','React'];
+const course=['ICS H32','MATH 3A','Stats 67','WR 60'];
+
+const V={
+ WHOAMI:()=>`<div class="glass view fade" style="border-top:4px solid #10b981"><div class="who">
+  ${ph('YOUR PROFILE PHOTO<br>(400 x 400)','av')}
+  <div><div><h3>Saket Gupta Yakkala</h3><div class="c-e">saket@saket's-website</div></div>
+  <p class="txt">I am a Computer Science student at UC Irvine with a strong passion for cybersecurity, systems architecture, and network defense. I enjoy breaking down complex problems and understanding how systems operate on a fundamental level.</p>
+  <div class="mini"><h4>CURRENT_COURSEWORK</h4><ul>${course.map(c=>`<li>${c}</li>`).join('')}</ul></div></div>
+ </div>
+ <div class="gal">${ph('PHOTO 1 (CTF / event)','sq')}${ph('PHOTO 2 (campus)','sq')}${ph('PHOTO 3 (hobby)','sq')}</div></div>`,
+ EXPERIENCE:()=>`<div class="glass view fade"><h2><span style="color:#3b82f6">${I.act}</span>./experience.sh</h2><div class="tl">
+  <div style="--c:#3b82f6"><h3>CyberPatriot</h3><div class="m">Team Member | High School</div><p class="txt">Participated in the National Youth Cyber Defense Competition. Secured virtual networks, hardened Windows and Linux systems, managed user policies, and mitigated simulated vulnerabilities.</p>${ph('TEAM PHOTO / CERTIFICATE','wide')}</div>
+  <div style="--c:#10b981"><h3>University of California, Irvine</h3><div class="m">B.S. Computer Science</div><p class="txt">Building a foundation in algorithms, data structures, and computer architecture while participating in cybersecurity clubs and collaborative coding projects.</p></div>
+ </div></div>`,
+ PROJECTS:()=>`<div class="glass view fade"><h2><span style="color:#a855f7">${I.folder}</span>./projects --list</h2><div class="grid">${projects.map((p,i)=>`<div class="proj" data-p="${i}" tabindex="0" role="button">${ph(p.img,'wide')}<h3>${p.t}</h3><div class="tags">${p.tech.map(x=>`<span>${x}</span>`).join('')}</div><p class="txt">${p.d}</p><div class="more">View project &rarr;</div></div>`).join('')}</div></div>`,
+ PROJECT:i=>{const p=projects[i];return `<div class="glass view fade detail"><button class="btn" data-v="PROJECTS" style="margin-bottom:24px">&larr; Back to projects</button>
+  <h2 class="grad" style="font-size:clamp(28px,5vw,44px);margin-bottom:12px">${p.t}</h2><div class="tags">${p.tech.map(x=>`<span>${x}</span>`).join('')}</div>
+  ${ph(p.img+'<br>(main image, 1600 x 900)','wide big')}
+  <div class="dgrid"><div><h3>Overview</h3><p class="txt">${p.long}</p><h3>What I built</h3><ul class="txt">${p.built.map(b=>`<li>${b}</li>`).join('')}</ul><h3>What I learned</h3><p class="txt">${p.learned}</p></div>
+  <aside><h3>Links</h3><div class="links" style="flex-direction:column;margin-top:0">${p.links.map(l=>`<a href="${l[1]}" onclick="return false">${l[0]} &nearr;</a>`).join('')}</div></aside></div>
+  <div class="gal">${ph('SCREENSHOT 2','sq')}${ph('SCREENSHOT 3','sq')}${ph('SCREENSHOT 4','sq')}</div></div>`},
+ SKILLS:()=>`<div class="glass view fade"><h2><span class="c-e">${I.code}</span>cat skills.txt</h2><div class="skills">${skills.map(s=>`<div>${s}</div>`).join('')}</div></div>`,
+ CONTACT:()=>`<div class="glass view fade"><h2><span class="c-e">${I.mail}</span>./contact --me</h2><p class="txt">Open to internships, CTF teams, and security project collabs. Say hi!</p>
+  <div class="links"><a href="#" onclick="return false">email: you@uci.edu</a><a href="#" onclick="return false">github.com/your-handle</a><a href="#" onclick="return false">linkedin.com/in/your-handle</a><a href="#" onclick="return false">Resume (PDF)</a></div></div>`,
+ BLOG:()=>`<div class="glass view fade center" style="border-color:rgba(168,85,247,.3);padding:48px"><div style="font-size:60px;margin-bottom:20px">🐈</div><h2 style="justify-content:center;color:#c084fc;font-size:28px">Meow! You found the secret blog.</h2><p class="txt" style="max-width:520px;margin:0 auto">This hidden sector is currently under construction. Future updates will include CTF writeups, homelab documentation, and technical deep dives.</p><div style="margin-top:28px;font-size:14px;color:#737373">Connection secured. Waiting for content injection...</div></div>`
+};
+const CARDS=[['WHOAMI','user','whoami','c-e'],['PROJECTS','folder','projects','c-p'],['SKILLS','code','skills','c-b'],['EXPERIENCE','act','experience','c-e'],['CONTACT','mail','contact','c-p']];
+const HOME=()=>`<div class="cards">${CARDS.map(c=>`<button class="glass card" data-v="${c[0]}"><span class="${c[3]}">${I[c[1]]}</span>./${c[2]}</button>`).join('')}</div>`;
+
+/* ===== boot ===== */
+const msgs=[["Started Show Plymouth Boot Screen.",1],["Reached target Paths.",1],["Reached target Basic System.",1],["Started LSB: Record successful boot for GRUB.",1],["Started Secure Boot cryptography.",1],["Starting Network Name Resolution...",0],["Started Network Name Resolution.",1],["Reached target Network.",1],["Starting System Logging Service...",0],["Started System Logging Service.",1],["Starting User Login Management...",0],["Started User Login Management.",1],["Reached target Graphical Interface.",1],["Starting Saket's Portfolio System...",0],["Started Saket's Portfolio System.",1]];
+const down=[["Stopped target Graphical Interface.",1],["Stopping User Login Management...",0],["Stopped User Login Management.",1],["Stopped target Network.",1],["Reached target Shutdown.",1],["Reached target Final Step.",1],["Starting Reboot...",0]];
+const WELCOME='<div class="row">Welcome to Saket OS v1.0.0 (GNU/Linux 5.15.0-101-generic x86_64)</div><div class="row">Type "help" to see available commands or use the dashboard below.</div>';
+function boot(first){
+ let b=document.getElementById('boot');
+ if(!b){b=document.createElement('div');b.id='boot';b.innerHTML='<div id="bl"></div><div class="cur"></div>';document.body.appendChild(b)}
+ const bl=b.querySelector('#bl');bl.innerHTML='';
+ const list=first?msgs:down.concat(msgs);let n=0;
+ const iv=setInterval(()=>{
+  if(n<list.length){const m=list[n++],d=document.createElement('div');d.className='l';
+   d.innerHTML=`<b>[<span style="color:${m[1]?'#22c55e':'#eab308'}">${m[1]?' OK ':'****'}</span>]</b><span></span>`;d.lastChild.textContent=m[0];bl.appendChild(d)}
+  else{clearInterval(iv);setTimeout(()=>{b.remove();finish(first)},800)}
+ },first?120:90);
+}
+function finish(first){
+ document.getElementById('app').style.display='flex';
+ if(!first){out.innerHTML=WELCOME;inp.value=''}
+ show('HOME');window.scrollTo(0,0);inp.focus();
+}
+boot(true);
+
+/* ===== views ===== */
+const view=document.getElementById('view'),homeBtn=document.getElementById('home');
+function show(v,a){document.body.classList.toggle('detail-mode',v==='PROJECT');if(v==='PROJECT')window.scrollTo(0,0);if(v==='BLOG'){out.innerHTML='';killHint()}view.innerHTML=v==='HOME'?HOME():V[v](a);homeBtn.style.display=v==='HOME'?'none':'';
+ view.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>show(b.dataset.v));
+ view.querySelectorAll('[data-p]').forEach(b=>{const o=()=>show('PROJECT',+b.dataset.p);b.onclick=o;b.onkeydown=e=>{if(e.key==='Enter')o()}})}
+homeBtn.onclick=()=>show('HOME');
+
+/* ===== terminal ===== */
+const out=document.getElementById('out'),inp=document.getElementById('inp'),hint=document.getElementById('hint');
+document.getElementById('term').onclick=()=>inp.focus();
+let hintGone=false;
+function killHint(){if(!hintGone){hintGone=true;hint.remove()}}
+inp.oninput=()=>{if(!hintGone)hint.style.display=inp.value?'none':'flex'};
+const PS='saket@saket\'s-website:~$';
+function add(html,cls){const d=document.createElement('div');d.className='row '+(cls||'');d.innerHTML=html;out.appendChild(d);out.scrollTop=out.scrollHeight}
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dirs=['whoami','projects','skills','experience','contact'];
+const go=v=>setTimeout(()=>show(v),400);
+inp.onkeydown=e=>{
+ if(e.key!=='Enter')return;
+ const cmd=inp.value.trim(),lc=cmd.toLowerCase();inp.value='';if(!hintGone)hint.style.display='flex';
+ if(!cmd)return;
+ if(lc==='clear'){out.innerHTML='';return}
+ add(`<span class="p">${PS}</span><span style="color:#e5e5e5">${esc(cmd)}</span>`);
+ const p=lc.split(/\s+/),arg=(p[1]||'').replace(/^\/+/,'');
+ if(lc==='restart'||lc==='reboot'){add('Broadcast message: the system is going down for reboot NOW!','c-e');setTimeout(()=>boot(false),700)}
+ else if(lc==='help'){
+  const h=[['help','Show this menu'],['ls','List directory contents'],['clear','Clear terminal output'],['cd [dir]','Change directory / view'],['cat [file]','Read file contents'],['restart','Reboot the system'],['cat /blog','Find the secret blog']];
+  add('<div class="g2" style="color:#d4d4d4;margin-top:6px">'+h.map(x=>`<span class="c-e">${x[0]}</span><span style="color:#737373">- ${x[1]}</span>`).join('')+'</div>')}
+ else if(lc==='ls')add('<div style="display:flex;flex-wrap:wrap;gap:8px 24px" class="c-b">'+dirs.map(d=>`<span>${d}/</span>`).join('')+'</div>');
+ else if(['meow','cat /blog','cat blog'].includes(lc)){add('Accessing restricted area... Meow!','c-p');setTimeout(()=>show('BLOG'),600)}
+ else if(dirs.includes(lc)){add(`Executing ${lc}...`,'c-e');go(lc.toUpperCase())}
+ else if(p[0]==='cd'){
+  if(dirs.includes(arg)){add(`Navigating to /${arg}...`,'c-e');go(arg.toUpperCase())}
+  else if(['..','~',''].includes(arg)){add('Returning to home...','c-e');go('HOME')}
+  else add(`cd: no such file or directory: ${esc(p[1])}`,'c-r')}
+ else if(p[0]==='cat'){
+  if(dirs.includes(arg)){add(`Displaying /${arg}...`,'c-e');go(arg.toUpperCase())}
+  else if(!arg)add('cat: missing operand','c-r');
+  else add(`cat: ${esc(p[1])}: No such file`,'c-r')}
+ else add(`${esc(cmd)}: command not found`,'c-r');
+};
+</script>
+</body>
+</html>
