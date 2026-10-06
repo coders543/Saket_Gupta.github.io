@@ -105,6 +105,13 @@ body.detail-mode .hero,body.detail-mode #term{display:none}
 @media(min-width:800px){.dgrid{grid-template-columns:2fr 1fr}}
 .dgrid h3{color:#fff;font-size:20px;margin:20px 0 8px}.dgrid h3:first-child{margin-top:0}
 .dgrid ul{padding-left:20px;margin:0}.dgrid li{margin-bottom:6px}
+.badge{display:inline-block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:1px solid;border-radius:999px;padding:2px 10px;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chips span{background:rgba(255,255,255,.07);color:#e5e5e5;font-size:12px;padding:3px 10px;border-radius:6px}
+.xrow{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.xrow>div:first-child{flex:1 1 300px;min-width:0}
+.ph.xph{flex:0 1 260px;width:260px;max-width:100%;aspect-ratio:16/9}
+.req{color:#a3a3a3;margin-bottom:8px}.req b{color:#e5e5e5}
 .skills{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media(min-width:700px){.skills{grid-template-columns:repeat(4,1fr)}}
 .skills div{border:1px solid var(--line);background:rgba(23,23,23,.5);padding:12px;text-align:center;color:var(--em);border-radius:6px;transition:.2s}
@@ -173,6 +180,24 @@ const projects=[
 const skills=['Python','C++','Java','Linux/Bash','Network Analysis','System Hardening','Git','React'];
 const course=['ICS H32','MATH 3A','Stats 67','WR 60'];
 
+const experience=[
+ {c:'#10b981',type:'Education',t:'University of California, Irvine',m:'B.S. Computer Science | Current',stats:[],
+  d:'Building a foundation in algorithms, data structures, and computer architecture while participating in cybersecurity clubs and collaborative coding projects.',img:'UCI / CAMPUS PHOTO'},
+ {c:'#3b82f6',type:'Leadership',t:'Cybersecurity Club President',m:'High School | 12th grade',stats:['4 hrs/week','36 weeks/yr','30 members'],
+  d:'Led 30 members in weekly meetings and workshops. Organized competitions including CyberPatriot, PicoCTF, and CyberQuest, and directed outreach sessions with senior centers and middle schools to teach cybersecurity awareness.',img:'CLUB PHOTO'},
+ {c:'#8b5cf6',type:'Competition',t:'picoCTF Participant (Carnegie Mellon University)',m:'High School | 11th grade',stats:['Rank #71 of ~1,800 teams','Top 5%','8 hrs/week','2 weeks/yr'],
+  d:'Ranked #71 out of around 1,800 U.S. middle and high school teams in picoCTF, a national cybersecurity competition hosted by CMU. Solved challenges in cryptography, networking, and forensics, collaborated with teammates, shared strategies, and developed critical problem-solving skills.',img:'PICOCTF SCOREBOARD / TEAM PHOTO'},
+ {c:'#ef4444',type:'Competition',t:'CyberPatriot Team Lead',m:'High School | 10th grade',stats:['83rd of 287 Gold Division teams','5 hrs/week','8 weeks/yr'],
+  d:'Competed in the nation\'s largest youth cyber defense competition. Placed 83rd out of 287 semifinalist Gold Division teams nationally and contributed to securing systems across multiple online rounds.',img:'CYBERPATRIOT TEAM PHOTO'},
+ {c:'#eab308',type:'Award | National',t:'National Cyber Scholar Award',m:'Non-academic | 10th grade',stats:['Top 5% of 30,000 participants','20,000+ points','$3,400 training scholarship'],
+  req:'Awarded to top scorers in CyberStart America. Students must earn 20,000 points to qualify for the NCSF scholarship application.',
+  d:'Completed 20 weeks of CyberStart America at around 4 hours a week, solving challenges in cryptography, network exploitation, and forensics. Earned 20,000+ points, ranked in the top 5% nationally, and qualified for the SANS Foundations scholarship and GFACT exam.',img:'AWARD / CERTIFICATE PHOTO'},
+ {c:'#f59e0b',type:'Award | City',t:'Research Award, Bay Area MUN Cybersecurity Conference',m:'Academic | 10th grade',stats:['Top 2 delegates','2 hrs/week','5 weeks'],
+  req:'Given to the top 2 delegates based on research, clarity, and debate performance at the Bay Area Model United Nations cybersecurity conference.',
+  d:'Wrote a research paper on cybersecurity threats in Ireland and researched solutions to combat them, demonstrating analytical and problem-solving skills.',img:'CONFERENCE / PAPER PHOTO'},
+ {c:'#06b6d4',type:'Competition',t:'picoCTF Competitor (Carnegie Mellon University)',m:'High School | 10th grade',stats:['Rank #383 of ~1,400 teams','4 hrs/week','2 weeks/yr'],
+  d:'Ranked #383 out of around 1,400 U.S. high school teams. Completed challenges in cryptography, networking, and forensics to build cybersecurity skills, and collaborated with teammates to share strategies and improve performance.',img:'PICOCTF PHOTO'}
+];
 const V={
  WHOAMI:()=>`<div class="glass view fade" style="border-top:4px solid #10b981"><div class="who">
   ${ph('YOUR PROFILE PHOTO<br>(400 x 400)','av')}
@@ -181,10 +206,9 @@ const V={
   <div class="mini"><h4>CURRENT_COURSEWORK</h4><ul>${course.map(c=>`<li>${c}</li>`).join('')}</ul></div></div>
  </div>
  <div class="gal">${ph('PHOTO 1 (CTF / event)','sq')}${ph('PHOTO 2 (campus)','sq')}${ph('PHOTO 3 (hobby)','sq')}</div></div>`,
- EXPERIENCE:()=>`<div class="glass view fade"><h2><span style="color:#3b82f6">${I.act}</span>./experience.sh</h2><div class="tl">
-  <div style="--c:#3b82f6"><h3>CyberPatriot</h3><div class="m">Team Member | High School</div><p class="txt">Participated in the National Youth Cyber Defense Competition. Secured virtual networks, hardened Windows and Linux systems, managed user policies, and mitigated simulated vulnerabilities.</p>${ph('TEAM PHOTO / CERTIFICATE','wide')}</div>
-  <div style="--c:#10b981"><h3>University of California, Irvine</h3><div class="m">B.S. Computer Science</div><p class="txt">Building a foundation in algorithms, data structures, and computer architecture while participating in cybersecurity clubs and collaborative coding projects.</p></div>
- </div></div>`,
+ EXPERIENCE:()=>`<div class="glass view fade"><h2><span style="color:#3b82f6">${I.act}</span>./experience.sh</h2><div class="tl">${experience.map(x=>`<div style="--c:${x.c}"><span class="badge" style="color:${x.c};border-color:${x.c}">${x.type}</span><h3>${x.t}</h3><div class="m">${x.m}</div>
+  ${x.stats.length?`<div class="chips">${x.stats.map(t=>`<span>${t}</span>`).join('')}</div>`:''}
+  <div class="xrow"><div>${x.req?`<p class="txt req"><b>How it's earned:</b> ${x.req}</p>`:''}<p class="txt">${x.d}</p></div>${ph(x.img,'xph')}</div></div>`).join('')}</div></div>`,
  PROJECTS:()=>`<div class="glass view fade"><h2><span style="color:#a855f7">${I.folder}</span>./projects --list</h2><div class="grid">${projects.map((p,i)=>`<div class="proj" data-p="${i}" tabindex="0" role="button">${ph(p.img,'wide')}<h3>${p.t}</h3><div class="tags">${p.tech.map(x=>`<span>${x}</span>`).join('')}</div><p class="txt">${p.d}</p><div class="more">View project &rarr;</div></div>`).join('')}</div></div>`,
  PROJECT:i=>{const p=projects[i];return `<div class="glass view fade detail"><button class="btn" data-v="PROJECTS" style="margin-bottom:24px">&larr; Back to projects</button>
   <h2 class="grad" style="font-size:clamp(28px,5vw,44px);margin-bottom:12px">${p.t}</h2><div class="tags">${p.tech.map(x=>`<span>${x}</span>`).join('')}</div>
@@ -235,7 +259,7 @@ document.getElementById('term').onclick=()=>inp.focus();
 let hintGone=false;
 function killHint(){if(!hintGone){hintGone=true;hint.remove()}}
 inp.oninput=()=>{if(!hintGone)hint.style.display=inp.value?'none':'flex'};
-const PS='saket@saket\'s-website:~$';
+const PS='saket\'s-website:~$'.replace(/^/,'saket@');
 function add(html,cls){const d=document.createElement('div');d.className='row '+(cls||'');d.innerHTML=html;out.appendChild(d);out.scrollTop=out.scrollHeight}
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const dirs=['whoami','projects','skills','experience','contact'];
