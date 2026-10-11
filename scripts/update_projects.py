@@ -2,6 +2,7 @@
 import json
 import os
 import re
+from urllib.parse import quote
 import urllib.request
 from pathlib import Path
 
@@ -12,6 +13,14 @@ TOKEN = os.environ.get("GITHUB_TOKEN", "")
 # Only repos with this topic show up on the site. Set to None to show every repo.
 REQUIRE_TOPIC = "portfolio"
 
+MAX_README = 6000      # characters of README to keep
+MAX_FILES = 6          # code files per project
+MAX_FILE_SIZE = 40000  # bytes per file
+MAX_TOTAL = 120000     # characters of code per project
+CODE_EXT = {".py", ".js", ".ts", ".java", ".c", ".cpp", ".h", ".hpp", ".cs", ".go", ".rs",
+            ".sh", ".ps1", ".html", ".css", ".sql", ".rb", ".php", ".kt", ".swift"}
+SKIP_DIRS = {"node_modules", "venv", ".venv", "dist", "build", "__pycache__", ".github", "vendor"}
+
 OUT_FILE = Path(__file__).resolve().parent.parent / "projects.json"
 
 
@@ -21,6 +30,49 @@ def get(url):
         headers["Authorization"] = "Bearer " + TOKEN
     with urllib.request.urlopen(urllib.request.Request(url, headers=headers)) as resp:
         return json.load(resp)
+
+
+def get_raw(url):
+    headers = {"Accept": "application/vnd.github.raw+json", "User-Agent": "portfolio-updater"}
+    if TOKEN:
+        headers["Authorization"] = "Bearer " + TOKEN
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers)) as resp:
+        return resp.read().decode("utf-8")
+
+
+def fetch_readme(name):
+    try:
+        return get_raw("https://api.github.com/repos/%s/%s/readme" % (OWNER, name))[:MAX_README].strip()
+    except Exception:
+        return ""
+
+
+def fetch_files(r):
+    files, total = [], 0
+    try:
+        branch = r.get("default_branch") or "main"
+        tree = get("https://api.github.com/repos/%s/%s/git/trees/%s?recursive=1" % (OWNER, r["name"], quote(branch)))
+        cands = [
+            t for t in tree.get("tree", [])
+            if t["type"] == "blob"
+            and os.path.splitext(t["path"])[1].lower() in CODE_EXT
+            and t.get("size", 0) <= MAX_FILE_SIZE
+            and not (set(t["path"].split("/")[:-1]) & SKIP_DIRS)
+        ]
+        cands.sort(key=lambda t: (t["path"].count("/"), len(t["path"])))
+        for t in cands[:MAX_FILES]:
+            try:
+                code = get_raw("https://api.github.com/repos/%s/%s/contents/%s?ref=%s"
+                               % (OWNER, r["name"], quote(t["path"]), quote(branch)))
+            except Exception:
+                continue
+            if total + len(code) > MAX_TOTAL:
+                break
+            total += len(code)
+            files.append({"path": t["path"], "code": code})
+    except Exception:
+        pass
+    return files
 
 
 def pretty_name(name):
@@ -51,8 +103,9 @@ def build_projects(repos):
             "long": desc,
             "built": [],
             "learned": "",
+            "readme": fetch_readme(r["name"]),
+            "files": fetch_files(r),
             "links": links,
-            "img": "SCREENSHOT: " + pretty_name(r["name"]).upper(),
         })
     return projects
 
