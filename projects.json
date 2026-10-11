@@ -1,5 +1,23 @@
 [
   {
+    "t": "linux_project",
+    "tech": [
+      "Shell"
+    ],
+    "d": "bash scripting for cyberpatriot",
+    "long": "bash scripting for cyberpatriot",
+    "built": [],
+    "learned": "",
+    "readme": "\ud83d\udee1\ufe0f CyberPatriot Beginner Linux Hardening Script\nWill write more for next years comp  \ud83d\ude01\nThis Bash script is designed to automate common Linux security practices and system hardening techniques often used in CyberPatriot competitions. It focuses on improving system security by adjusting permissions, locking unnecessary access, enforcing strong password policies, and configuring basic firewall rules.\n\n\ud83d\udd27 Features\nSystem Update & Upgrade\n\nEnsures the system is up to date with the latest patches.\n\nPassword Policy Enforcement\n\nInstalls libpam-cracklib to enforce strong password creation.\n\nFile Removal\n\nSearches for and deletes all .mp3 files as a common point-deduction item in CyberPatriot.\n\nFirewall Configuration\n\nBlocks all incoming connections by default.\n\nAllows all outgoing traffic.\n\nRoot Account & File Permissions\n\nLocks the root user.\n\nRestricts permissions on sensitive system files like /etc/shadow, /etc/sudoers, and more.\n\nSSH Security\n\nDisables root login via SSH by editing sshd_config.\n\nPassword Aging Policies\n\nSets a minimum number of days before a password can be changed again.\n\nKernel Hardening\n\nEnables tcp_syncookies to prevent SYN flood attacks.\n\nEnables rp_filter to prevent IP spoofing.",
+    "files": [],
+    "links": [
+      [
+        "GitHub repo",
+        "https://github.com/coders543/Shell-Scripting-for-CyberPatriot"
+      ]
+    ]
+  },
+  {
     "t": "Elsa Magic AR",
     "tech": [
       "Python"
