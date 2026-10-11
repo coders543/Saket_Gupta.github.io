@@ -1,26 +1,34 @@
-name: Nightly projects update
+name: Update projects
 
 on:
   schedule:
-    - cron: "0 8 * * *"
+    - cron: "0 * * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Fetch GitHub repos
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 scripts/update_projects.py
 
-      - uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          branch: nightly-projects-update
-          add-paths: projects.json
-          commit-message: "Update projects from GitHub"
-          title: "Update projects from GitHub"
-          body: "Automated nightly refresh of projects.json from my GitHub repos."
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add projects.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Update projects from GitHub"
+            git push
+          fi
