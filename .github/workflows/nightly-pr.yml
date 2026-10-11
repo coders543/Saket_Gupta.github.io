@@ -1,4 +1,4 @@
-name: Nightly update PR
+name: Nightly projects update
 
 on:
   schedule:
@@ -11,14 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Make changes
-        run: |
-          date -u +"Last updated: %Y-%m-%d" > last-updated.txt
+      - name: Fetch GitHub repos
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/update_projects.py
 
       - uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          branch: nightly-update
-          commit-message: "Nightly update"
-          title: "Nightly update"
-          body: "Automated nightly changes."
+          branch: nightly-projects-update
+          add-paths: projects.json
+          commit-message: "Update projects from GitHub"
+          title: "Update projects from GitHub"
+          body: "Automated nightly refresh of projects.json from my GitHub repos."
