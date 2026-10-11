@@ -1,6 +1,7 @@
 """Fetch public GitHub repos and write projects.json for the portfolio site."""
 import json
 import os
+import re
 import urllib.request
 from pathlib import Path
 
@@ -22,6 +23,14 @@ def get(url):
         return json.load(resp)
 
 
+def pretty_name(name):
+    name = name.strip("-_")
+    name = re.sub(r"-{2,}", "\x00", name)
+    name = re.sub(r"[-_]+", " ", name)
+    name = name.replace("\x00", " - ")
+    return re.sub(r"\s+", " ", name).strip()
+
+
 def build_projects(repos):
     projects = []
     for r in repos:
@@ -31,19 +40,19 @@ def build_projects(repos):
         if REQUIRE_TOPIC and REQUIRE_TOPIC not in topics:
             continue
         tech = ([r["language"]] if r.get("language") else []) + [t for t in topics if t != REQUIRE_TOPIC]
-        desc = r.get("description") or "No description yet."
+        desc = (r.get("description") or "").strip() or "No description yet."
         links = [["GitHub repo", r["html_url"]]]
         if r.get("homepage"):
             links.append(["Live demo", r["homepage"]])
         projects.append({
-            "t": r["name"].replace("-", " ").replace("_", " "),
+            "t": pretty_name(r["name"]),
             "tech": tech,
             "d": desc,
             "long": desc,
             "built": [],
             "learned": "",
             "links": links,
-            "img": "SCREENSHOT: " + r["name"].upper(),
+            "img": "SCREENSHOT: " + pretty_name(r["name"]).upper(),
         })
     return projects
 
