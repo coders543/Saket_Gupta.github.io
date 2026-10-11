@@ -17,9 +17,9 @@ EXTRA_REPOS = []  # e.g. ["someone/their-project"]
 REQUIRE_TOPIC = "portfolio"
 
 MAX_README = 12000     # characters of README to keep
-MAX_FILES = 6          # code files per project
-MAX_FILE_SIZE = 400000  # bytes per file
-MAX_TOTAL = 1200000     # characters of code per project
+MAX_FILES = 10         # code files per project
+MAX_FILE_SIZE = 300000  # bytes per file
+MAX_TOTAL = 600000     # characters of code per project
 CODE_EXT = {".py", ".js", ".ts", ".java", ".c", ".cpp", ".h", ".hpp", ".cs", ".go", ".rs",
             ".sh", ".ps1", ".html", ".css", ".sql", ".rb", ".php", ".kt", ".swift"}
 SKIP_DIRS = {"node_modules", "venv", ".venv", "dist", "build", "__pycache__", ".github", "vendor"}
