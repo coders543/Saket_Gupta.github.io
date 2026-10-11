@@ -1,0 +1,25 @@
+name: Nightly update PR
+
+on:
+  schedule:
+    - cron: "0 8 * * *"   # 8:00 UTC every night (midnight Pacific in winter)
+  workflow_dispatch:       # lets you run it manually from the Actions tab
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Replace this step with whatever should change each night.
+      # Example: record the update date in a file.
+      - name: Make changes
+        run: date -u +"Last updated: %Y-%m-%d" > last-updated.txt
+
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          branch: nightly-update
+          commit-message: "Nightly update"
+          title: "Nightly update"
+          body: "Automated nightly changes."
