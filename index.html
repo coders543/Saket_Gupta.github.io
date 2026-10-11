@@ -126,7 +126,7 @@ body.detail-mode .hero,body.detail-mode #term{display:none}
 </head>
 <body>
 <div id="boot"><div id="bl"></div><div class="cur"></div></div>
-
+ 
 <div id="app">
   <div id="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div><div class="blob b5"></div></div>
   <div class="wrap">
@@ -134,9 +134,9 @@ body.detail-mode .hero,body.detail-mode #term{display:none}
       <div><h1 class="grad">Saket Gupta Yakkala</h1><p class="sub">CS at UCI &middot; Cybersecurity</p></div>
       <button class="btn" id="home" style="display:none">cd ~ (Return Home)</button>
     </header>
-
+ 
     <section class="glass hero"><p class="eyebrow">// hello, world</p><h2 class="grad">Welcome to my website</h2><p class="d">I'm Saket, a CS student at UC Irvine into cybersecurity. This site works like a Linux terminal: type <code>help</code> in the box below, or just click a card under it to explore.</p></section>
-
+ 
     <div class="glass" id="term">
       <div class="tbar"><div class="dots"><i style="background:#ef4444"></i><i style="background:#eab308"></i><i style="background:#22c55e"></i></div><span>saket@saket's-website:~</span><div style="width:48px"></div></div>
       <div id="out">
@@ -147,12 +147,12 @@ body.detail-mode .hero,body.detail-mode #term{display:none}
         <div class="box"><input id="inp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off"><div id="hint"><span>find the secret blog... hint: what says meow?</span></div></div>
       </div>
     </div>
-
+ 
     <div id="view"></div>
   </div>
   <div class="foot">&copy; 2026 Saket Gupta Yakkala &middot; built with caffeine &amp; Linux</div>
 </div>
-
+ 
 <script>
 const I={
  user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
@@ -163,23 +163,13 @@ const I={
  img:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>'
 };
 const ph=(label,cls)=>`<div class="ph ${cls||''}">${I.img}<span>${label}</span></div>`;
-
+ 
 /* ===== EDIT YOUR CONTENT HERE ===== */
-const projects=[
- {t:'Active Directory Homelab',tech:['Windows Server','AD DS','pfSense'],d:'Built a virtual enterprise environment to understand domain controllers, Group Policy Objects, and network segregation.',img:'PROJECT SCREENSHOT 1',
-  long:'A self-hosted virtual enterprise network used to practice both administration and attack/defense. It models a small company with a domain controller, workstations, and a firewall separating network segments.',
-  built:['Deployed a Windows Server domain controller with AD DS, DNS, and DHCP','Created users, groups, OUs, and Group Policy Objects','Segmented the network with pfSense firewall rules and VLANs','Joined Windows clients to the domain and tested policy enforcement'],
-  learned:'How identity, policy, and network boundaries work together, and why misconfigured permissions are such a common attack path.',
-  links:[['GitHub repo','#'],['Write-up','#']]},
- {t:'Automated Enumeration Script',tech:['Bash','Nmap','Python'],d:'Developed a custom script to automate initial network reconnaissance and parse results into readable HTML reports.',img:'PROJECT SCREENSHOT 2',
-  long:'A recon helper that runs the repetitive first steps of a scan, then turns raw tool output into a clean report so findings are easy to review and share.',
-  built:['Wrapped Nmap scans in a Bash script with configurable targets and ports','Parsed XML output with Python to pull hosts, open ports, and services','Generated a styled HTML report with a summary table','Added basic error handling and logging'],
-  learned:'How to automate a workflow end to end and present technical results clearly. Only run it against systems you own or have permission to test.',
-  links:[['GitHub repo','#'],['Sample report','#']]}
-];
+let projects=[];
+fetch('projects.json',{cache:'no-store'}).then(r=>r.ok?r.json():[]).then(d=>{if(Array.isArray(d))projects=d}).catch(()=>{});
 const skills=['Python','C++','Java','Linux/Bash','Network Analysis','System Hardening','Git','React'];
 const course=['ICS H32','MATH 3A','Stats 67','WR 60'];
-
+ 
 const experience=[
  {c:'#10b981',type:'Education',t:'University of California, Irvine',m:'B.S. Computer Science | Current',stats:[],
   d:'Building a foundation in algorithms, data structures, and computer architecture while participating in cybersecurity clubs and collaborative coding projects.',img:'UCI / CAMPUS PHOTO'},
@@ -209,12 +199,12 @@ const V={
  EXPERIENCE:()=>`<div class="glass view fade"><h2><span style="color:#3b82f6">${I.act}</span>./experience.sh</h2><div class="tl">${experience.map(x=>`<div style="--c:${x.c}"><span class="badge" style="color:${x.c};border-color:${x.c}">${x.type}</span><h3>${x.t}</h3><div class="m">${x.m}</div>
   ${x.stats.length?`<div class="chips">${x.stats.map(t=>`<span>${t}</span>`).join('')}</div>`:''}
   <div class="xrow"><div>${x.req?`<p class="txt req"><b>How it's earned:</b> ${x.req}</p>`:''}<p class="txt">${x.d}</p></div>${ph(x.img,'xph')}</div></div>`).join('')}</div></div>`,
- PROJECTS:()=>`<div class="glass view fade"><h2><span style="color:#a855f7">${I.folder}</span>./projects --list</h2><div class="grid">${projects.map((p,i)=>`<div class="proj" data-p="${i}" tabindex="0" role="button">${ph(p.img,'wide')}<h3>${p.t}</h3><div class="tags">${p.tech.map(x=>`<span>${x}</span>`).join('')}</div><p class="txt">${p.d}</p><div class="more">View project &rarr;</div></div>`).join('')}</div></div>`,
+ PROJECTS:()=>`<div class="glass view fade"><h2><span style="color:#a855f7">${I.folder}</span>./projects --list</h2>${projects.length?`<div class="grid">${projects.map((p,i)=>`<div class="proj" data-p="${i}" tabindex="0" role="button">${ph(esc(p.img),'wide')}<h3>${esc(p.t)}</h3><div class="tags">${p.tech.map(x=>`<span>${esc(x)}</span>`).join('')}</div><p class="txt">${esc(p.d)}</p><div class="more">View project &rarr;</div></div>`).join('')}</div>`:'<p class="txt">No projects to show yet. Check back soon.</p>'}</div>`,
  PROJECT:i=>{const p=projects[i];return `<div class="glass view fade detail"><button class="btn" data-v="PROJECTS" style="margin-bottom:24px">&larr; Back to projects</button>
-  <h2 class="grad" style="font-size:clamp(28px,5vw,44px);margin-bottom:12px">${p.t}</h2><div class="tags">${p.tech.map(x=>`<span>${x}</span>`).join('')}</div>
-  ${ph(p.img+'<br>(main image, 1600 x 900)','wide big')}
-  <div class="dgrid"><div><h3>Overview</h3><p class="txt">${p.long}</p><h3>What I built</h3><ul class="txt">${p.built.map(b=>`<li>${b}</li>`).join('')}</ul><h3>What I learned</h3><p class="txt">${p.learned}</p></div>
-  <aside><h3>Links</h3><div class="links" style="flex-direction:column;margin-top:0">${p.links.map(l=>`<a href="${l[1]}" onclick="return false">${l[0]} &nearr;</a>`).join('')}</div></aside></div>
+  <h2 class="grad" style="font-size:clamp(28px,5vw,44px);margin-bottom:12px">${esc(p.t)}</h2><div class="tags">${p.tech.map(x=>`<span>${esc(x)}</span>`).join('')}</div>
+  ${ph(esc(p.img)+'<br>(main image, 1600 x 900)','wide big')}
+  <div class="dgrid"><div><h3>Overview</h3><p class="txt">${esc(p.long||p.d)}</p>${p.built&&p.built.length?`<h3>What I built</h3><ul class="txt">${p.built.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}${p.learned?`<h3>What I learned</h3><p class="txt">${esc(p.learned)}</p>`:''}</div>
+  <aside><h3>Links</h3><div class="links" style="flex-direction:column;margin-top:0">${p.links.map(l=>`<a href="${esc(l[1])}" target="_blank" rel="noopener noreferrer">${esc(l[0])} &nearr;</a>`).join('')}</div></aside></div>
   <div class="gal">${ph('SCREENSHOT 2','sq')}${ph('SCREENSHOT 3','sq')}${ph('SCREENSHOT 4','sq')}</div></div>`},
  SKILLS:()=>`<div class="glass view fade"><h2><span class="c-e">${I.code}</span>cat skills.txt</h2><div class="skills">${skills.map(s=>`<div>${s}</div>`).join('')}</div></div>`,
  CONTACT:()=>`<div class="glass view fade"><h2><span class="c-e">${I.mail}</span>./contact --me</h2><p class="txt">Open to internships, CTF teams, and security project collabs. Say hi!</p>
@@ -223,7 +213,7 @@ const V={
 };
 const CARDS=[['WHOAMI','user','whoami','c-e'],['PROJECTS','folder','projects','c-p'],['SKILLS','code','skills','c-b'],['EXPERIENCE','act','experience','c-e'],['CONTACT','mail','contact','c-p']];
 const HOME=()=>`<div class="cards">${CARDS.map(c=>`<button class="glass card" data-v="${c[0]}"><span class="${c[3]}">${I[c[1]]}</span>./${c[2]}</button>`).join('')}</div>`;
-
+ 
 /* ===== boot ===== */
 const msgs=[["Started Show Plymouth Boot Screen.",1],["Reached target Paths.",1],["Reached target Basic System.",1],["Started LSB: Record successful boot for GRUB.",1],["Started Secure Boot cryptography.",1],["Starting Network Name Resolution...",0],["Started Network Name Resolution.",1],["Reached target Network.",1],["Starting System Logging Service...",0],["Started System Logging Service.",1],["Starting User Login Management...",0],["Started User Login Management.",1],["Reached target Graphical Interface.",1],["Starting Saket's Portfolio System...",0],["Started Saket's Portfolio System.",1]];
 const down=[["Stopped target Graphical Interface.",1],["Stopping User Login Management...",0],["Stopped User Login Management.",1],["Stopped target Network.",1],["Reached target Shutdown.",1],["Reached target Final Step.",1],["Starting Reboot...",0]];
@@ -245,21 +235,21 @@ function finish(first){
  show('HOME');window.scrollTo(0,0);inp.focus();
 }
 boot(true);
-
+ 
 /* ===== views ===== */
 const view=document.getElementById('view'),homeBtn=document.getElementById('home');
 function show(v,a){document.body.classList.toggle('detail-mode',v==='PROJECT');if(v==='PROJECT')window.scrollTo(0,0);if(v==='BLOG'){out.innerHTML='';killHint()}view.innerHTML=v==='HOME'?HOME():V[v](a);homeBtn.style.display=v==='HOME'?'none':'';
  view.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>show(b.dataset.v));
  view.querySelectorAll('[data-p]').forEach(b=>{const o=()=>show('PROJECT',+b.dataset.p);b.onclick=o;b.onkeydown=e=>{if(e.key==='Enter')o()}})}
 homeBtn.onclick=()=>show('HOME');
-
+ 
 /* ===== terminal ===== */
 const out=document.getElementById('out'),inp=document.getElementById('inp'),hint=document.getElementById('hint');
 document.getElementById('term').onclick=()=>inp.focus();
 let hintGone=false;
 function killHint(){if(!hintGone){hintGone=true;hint.remove()}}
 inp.oninput=()=>{if(!hintGone)hint.style.display=inp.value?'none':'flex'};
-const PS='saket\'s-website:~$'.replace(/^/,'saket@');
+const PS='saket@saket\'s-website:~$';
 function add(html,cls){const d=document.createElement('div');d.className='row '+(cls||'');d.innerHTML=html;out.appendChild(d);out.scrollTop=out.scrollHeight}
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const dirs=['whoami','projects','skills','experience','contact'];
