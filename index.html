@@ -112,6 +112,12 @@ body.detail-mode .hero,body.detail-mode #term{display:none}
 .xrow>div:first-child{flex:1 1 300px;min-width:0}
 .ph.xph{flex:0 1 260px;width:260px;max-width:100%;aspect-ratio:16/9}
 .req{color:#a3a3a3;margin-bottom:8px}.req b{color:#e5e5e5}
+.code{background:#050505;border:1px solid var(--line);border-radius:8px;padding:14px;overflow:auto;max-height:480px;font-size:13px;color:#d4d4d4;line-height:1.5;white-space:pre;margin:8px 0}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{background:rgba(23,23,23,.7);border:1px solid #404040;color:var(--mut);padding:4px 10px;border-radius:6px;font:inherit;font-size:12px;cursor:pointer}
+.tab.on{color:var(--em);border-color:var(--em)}
+.readme p{margin:0 0 10px}.readme h4{color:#fff;margin:16px 0 6px;font-size:16px}.readme a{color:var(--em)}.readme ul{padding-left:20px;margin:0 0 10px}
+.readme code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px;color:var(--em)}
 .skills{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media(min-width:700px){.skills{grid-template-columns:repeat(4,1fr)}}
 .skills div{border:1px solid var(--line);background:rgba(23,23,23,.5);padding:12px;text-align:center;color:var(--em);border-radius:6px;transition:.2s}
@@ -126,7 +132,7 @@ body.detail-mode .hero,body.detail-mode #term{display:none}
 </head>
 <body>
 <div id="boot"><div id="bl"></div><div class="cur"></div></div>
- 
+
 <div id="app">
   <div id="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div><div class="blob b5"></div></div>
   <div class="wrap">
@@ -134,9 +140,9 @@ body.detail-mode .hero,body.detail-mode #term{display:none}
       <div><h1 class="grad">Saket Gupta Yakkala</h1><p class="sub">CS at UCI &middot; Cybersecurity</p></div>
       <button class="btn" id="home" style="display:none">cd ~ (Return Home)</button>
     </header>
- 
+
     <section class="glass hero"><p class="eyebrow">// hello, world</p><h2 class="grad">Welcome to my website</h2><p class="d">I'm Saket, a CS student at UC Irvine into cybersecurity. This site works like a Linux terminal: type <code>help</code> in the box below, or just click a card under it to explore.</p></section>
- 
+
     <div class="glass" id="term">
       <div class="tbar"><div class="dots"><i style="background:#ef4444"></i><i style="background:#eab308"></i><i style="background:#22c55e"></i></div><span>saket@saket's-website:~</span><div style="width:48px"></div></div>
       <div id="out">
@@ -147,12 +153,12 @@ body.detail-mode .hero,body.detail-mode #term{display:none}
         <div class="box"><input id="inp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off"><div id="hint"><span>find the secret blog... hint: what says meow?</span></div></div>
       </div>
     </div>
- 
+
     <div id="view"></div>
   </div>
   <div class="foot">&copy; 2026 Saket Gupta Yakkala &middot; built with caffeine &amp; Linux</div>
 </div>
- 
+
 <script>
 const I={
  user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
@@ -163,13 +169,13 @@ const I={
  img:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>'
 };
 const ph=(label,cls)=>`<div class="ph ${cls||''}">${I.img}<span>${label}</span></div>`;
- 
+
 /* ===== EDIT YOUR CONTENT HERE ===== */
 let projects=[];
 fetch('projects.json',{cache:'no-store'}).then(r=>r.ok?r.json():[]).then(d=>{if(Array.isArray(d))projects=d}).catch(()=>{});
 const skills=['Python','C++','Java','Linux/Bash','Network Analysis','System Hardening','Git','React'];
 const course=['ICS H32','MATH 3A','Stats 67','WR 60'];
- 
+
 const experience=[
  {c:'#10b981',type:'Education',t:'University of California, Irvine',m:'B.S. Computer Science | Current',stats:[],
   d:'Building a foundation in algorithms, data structures, and computer architecture while participating in cybersecurity clubs and collaborative coding projects.',img:'UCI / CAMPUS PHOTO'},
@@ -199,13 +205,13 @@ const V={
  EXPERIENCE:()=>`<div class="glass view fade"><h2><span style="color:#3b82f6">${I.act}</span>./experience.sh</h2><div class="tl">${experience.map(x=>`<div style="--c:${x.c}"><span class="badge" style="color:${x.c};border-color:${x.c}">${x.type}</span><h3>${x.t}</h3><div class="m">${x.m}</div>
   ${x.stats.length?`<div class="chips">${x.stats.map(t=>`<span>${t}</span>`).join('')}</div>`:''}
   <div class="xrow"><div>${x.req?`<p class="txt req"><b>How it's earned:</b> ${x.req}</p>`:''}<p class="txt">${x.d}</p></div>${ph(x.img,'xph')}</div></div>`).join('')}</div></div>`,
- PROJECTS:()=>`<div class="glass view fade"><h2><span style="color:#a855f7">${I.folder}</span>./projects --list</h2>${projects.length?`<div class="grid">${projects.map((p,i)=>`<div class="proj" data-p="${i}" tabindex="0" role="button">${ph(esc(p.img),'wide')}<h3>${esc(p.t)}</h3><div class="tags">${p.tech.map(x=>`<span>${esc(x)}</span>`).join('')}</div><p class="txt">${esc(p.d)}</p><div class="more">View project &rarr;</div></div>`).join('')}</div>`:'<p class="txt">No projects to show yet. Check back soon.</p>'}</div>`,
+ PROJECTS:()=>`<div class="glass view fade"><h2><span style="color:#a855f7">${I.folder}</span>./projects --list</h2>${projects.length?`<div class="grid">${projects.map((p,i)=>`<div class="proj" data-p="${i}" tabindex="0" role="button"><h3>${esc(p.t)}</h3><div class="tags">${p.tech.map(x=>`<span>${esc(x)}</span>`).join('')}</div><p class="txt">${esc(p.d)}</p><div class="more">View project &rarr;</div></div>`).join('')}</div>`:'<p class="txt">No projects to show yet. Check back soon.</p>'}</div>`,
  PROJECT:i=>{const p=projects[i];return `<div class="glass view fade detail"><button class="btn" data-v="PROJECTS" style="margin-bottom:24px">&larr; Back to projects</button>
   <h2 class="grad" style="font-size:clamp(28px,5vw,44px);margin-bottom:12px">${esc(p.t)}</h2><div class="tags">${p.tech.map(x=>`<span>${esc(x)}</span>`).join('')}</div>
-  ${ph(esc(p.img)+'<br>(main image, 1600 x 900)','wide big')}
-  <div class="dgrid"><div><h3>Overview</h3><p class="txt">${esc(p.long||p.d)}</p>${p.built&&p.built.length?`<h3>What I built</h3><ul class="txt">${p.built.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}${p.learned?`<h3>What I learned</h3><p class="txt">${esc(p.learned)}</p>`:''}</div>
+  
+  <div class="dgrid"><div><h3>Overview</h3><p class="txt">${esc(p.long||p.d)}</p>${p.built&&p.built.length?`<h3>What I built</h3><ul class="txt">${p.built.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}${p.learned?`<h3>What I learned</h3><p class="txt">${esc(p.learned)}</p>`:''}${p.readme?`<h3>README</h3><div class="txt readme">${md(p.readme)}</div>`:''}</div>
   <aside><h3>Links</h3><div class="links" style="flex-direction:column;margin-top:0">${p.links.map(l=>`<a href="${esc(l[1])}" target="_blank" rel="noopener noreferrer">${esc(l[0])} &nearr;</a>`).join('')}</div></aside></div>
-  <div class="gal">${ph('SCREENSHOT 2','sq')}${ph('SCREENSHOT 3','sq')}${ph('SCREENSHOT 4','sq')}</div></div>`},
+  ${p.files&&p.files.length?`<h3 style="color:#fff;font-size:20px;margin:28px 0 10px">Code</h3><div class="tabs">${p.files.map((f,k)=>`<button class="tab${k?'':' on'}" data-f="${k}">${esc(f.path)}</button>`).join('')}</div><pre class="code" id="codebox">${esc(p.files[0].code)}</pre>`:''}</div>`},
  SKILLS:()=>`<div class="glass view fade"><h2><span class="c-e">${I.code}</span>cat skills.txt</h2><div class="skills">${skills.map(s=>`<div>${s}</div>`).join('')}</div></div>`,
  CONTACT:()=>`<div class="glass view fade"><h2><span class="c-e">${I.mail}</span>./contact --me</h2><p class="txt">Open to internships, CTF teams, and security project collabs. Say hi!</p>
   <div class="links"><a href="#" onclick="return false">email: you@uci.edu</a><a href="#" onclick="return false">github.com/your-handle</a><a href="#" onclick="return false">linkedin.com/in/your-handle</a><a href="#" onclick="return false">Resume (PDF)</a></div></div>`,
@@ -213,7 +219,7 @@ const V={
 };
 const CARDS=[['WHOAMI','user','whoami','c-e'],['PROJECTS','folder','projects','c-p'],['SKILLS','code','skills','c-b'],['EXPERIENCE','act','experience','c-e'],['CONTACT','mail','contact','c-p']];
 const HOME=()=>`<div class="cards">${CARDS.map(c=>`<button class="glass card" data-v="${c[0]}"><span class="${c[3]}">${I[c[1]]}</span>./${c[2]}</button>`).join('')}</div>`;
- 
+
 /* ===== boot ===== */
 const msgs=[["Started Show Plymouth Boot Screen.",1],["Reached target Paths.",1],["Reached target Basic System.",1],["Started LSB: Record successful boot for GRUB.",1],["Started Secure Boot cryptography.",1],["Starting Network Name Resolution...",0],["Started Network Name Resolution.",1],["Reached target Network.",1],["Starting System Logging Service...",0],["Started System Logging Service.",1],["Starting User Login Management...",0],["Started User Login Management.",1],["Reached target Graphical Interface.",1],["Starting Saket's Portfolio System...",0],["Started Saket's Portfolio System.",1]];
 const down=[["Stopped target Graphical Interface.",1],["Stopping User Login Management...",0],["Stopped User Login Management.",1],["Stopped target Network.",1],["Reached target Shutdown.",1],["Reached target Final Step.",1],["Starting Reboot...",0]];
@@ -235,14 +241,15 @@ function finish(first){
  show('HOME');window.scrollTo(0,0);inp.focus();
 }
 boot(true);
- 
+
 /* ===== views ===== */
 const view=document.getElementById('view'),homeBtn=document.getElementById('home');
 function show(v,a){document.body.classList.toggle('detail-mode',v==='PROJECT');if(v==='PROJECT')window.scrollTo(0,0);if(v==='BLOG'){out.innerHTML='';killHint()}view.innerHTML=v==='HOME'?HOME():V[v](a);homeBtn.style.display=v==='HOME'?'none':'';
  view.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>show(b.dataset.v));
+ view.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{document.getElementById('codebox').textContent=projects[a].files[+b.dataset.f].code;view.querySelectorAll('[data-f]').forEach(x=>x.classList.toggle('on',x===b))});
  view.querySelectorAll('[data-p]').forEach(b=>{const o=()=>show('PROJECT',+b.dataset.p);b.onclick=o;b.onkeydown=e=>{if(e.key==='Enter')o()}})}
 homeBtn.onclick=()=>show('HOME');
- 
+
 /* ===== terminal ===== */
 const out=document.getElementById('out'),inp=document.getElementById('inp'),hint=document.getElementById('hint');
 document.getElementById('term').onclick=()=>inp.focus();
@@ -252,6 +259,17 @@ inp.oninput=()=>{if(!hintGone)hint.style.display=inp.value?'none':'flex'};
 const PS='saket@saket\'s-website:~$';
 function add(html,cls){const d=document.createElement('div');d.className='row '+(cls||'');d.innerHTML=html;out.appendChild(d);out.scrollTop=out.scrollHeight}
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const inl=s=>s.replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+const md=t=>{const bl=[];t=esc(t.replace(/!\[[^\]]*\]\([^)]*\)/g,'')).replace(/```[^\n]*\n([\s\S]*?)```/g,(_,c)=>(bl.push(c),'\u0000'+(bl.length-1)+'\u0000'));
+ let o='',ul=false;
+ for(const l of t.split('\n')){const li=l.match(/^\s*[-*] (.*)/);
+  if(li&&!ul){o+='<ul>';ul=true}else if(!li&&ul){o+='</ul>';ul=false}
+  if(li)o+='<li>'+inl(li[1])+'</li>';
+  else if(/^#{1,6} /.test(l))o+='<h4>'+inl(l.replace(/^#+ /,''))+'</h4>';
+  else if(/^\u0000\d+\u0000$/.test(l.trim()))o+=l.trim();
+  else if(l.trim())o+='<p>'+inl(l)+'</p>'}
+ if(ul)o+='</ul>';
+ return o.replace(/\u0000(\d+)\u0000/g,(_,i)=>'<pre class="code">'+bl[i]+'</pre>')};
 const dirs=['whoami','projects','skills','experience','contact'];
 const go=v=>setTimeout(()=>show(v),400);
 inp.onkeydown=e=>{
