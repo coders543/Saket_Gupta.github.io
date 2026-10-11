@@ -10,10 +10,13 @@ OWNER = os.environ.get("GITHUB_REPOSITORY_OWNER", "coders543")
 THIS_REPO = os.environ.get("GITHUB_REPOSITORY", "").split("/")[-1]
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
 
+# Repos owned by other people (or forks) you still want on the site, as "owner/repo".
+EXTRA_REPOS = []  # e.g. ["someone/their-project"]
+
 # Only repos with this topic show up on the site. Set to None to show every repo.
 REQUIRE_TOPIC = "portfolio"
 
-MAX_README = 6000      # characters of README to keep
+MAX_README = 12000     # characters of README to keep
 MAX_FILES = 6          # code files per project
 MAX_FILE_SIZE = 40000  # bytes per file
 MAX_TOTAL = 120000     # characters of code per project
@@ -40,9 +43,9 @@ def get_raw(url):
         return resp.read().decode("utf-8")
 
 
-def fetch_readme(name):
+def fetch_readme(owner, name):
     try:
-        return get_raw("https://api.github.com/repos/%s/%s/readme" % (OWNER, name))[:MAX_README].strip()
+        return get_raw("https://api.github.com/repos/%s/%s/readme" % (owner, name))[:MAX_README].strip()
     except Exception:
         return ""
 
@@ -50,8 +53,9 @@ def fetch_readme(name):
 def fetch_files(r):
     files, total = [], 0
     try:
+        owner = r.get("owner", {}).get("login", OWNER)
         branch = r.get("default_branch") or "main"
-        tree = get("https://api.github.com/repos/%s/%s/git/trees/%s?recursive=1" % (OWNER, r["name"], quote(branch)))
+        tree = get("https://api.github.com/repos/%s/%s/git/trees/%s?recursive=1" % (owner, r["name"], quote(branch)))
         cands = [
             t for t in tree.get("tree", [])
             if t["type"] == "blob"
@@ -63,7 +67,7 @@ def fetch_files(r):
         for t in cands[:MAX_FILES]:
             try:
                 code = get_raw("https://api.github.com/repos/%s/%s/contents/%s?ref=%s"
-                               % (OWNER, r["name"], quote(t["path"]), quote(branch)))
+                               % (owner, r["name"], quote(t["path"]), quote(branch)))
             except Exception:
                 continue
             if total + len(code) > MAX_TOTAL:
@@ -86,24 +90,29 @@ def pretty_name(name):
 def build_projects(repos):
     projects = []
     for r in repos:
-        if r.get("fork") or r.get("archived") or r["name"] == THIS_REPO:
+        if (r.get("fork") and not r.get("_extra")) or r.get("archived") or r["name"] == THIS_REPO:
             continue
         topics = r.get("topics") or []
-        if REQUIRE_TOPIC and REQUIRE_TOPIC not in topics:
+        if REQUIRE_TOPIC and not r.get("_extra") and REQUIRE_TOPIC not in topics:
             continue
         tech = ([r["language"]] if r.get("language") else []) + [t for t in topics if t != REQUIRE_TOPIC]
         desc = (r.get("description") or "").strip() or "No description yet."
         links = [["GitHub repo", r["html_url"]]]
         if r.get("homepage"):
             links.append(["Live demo", r["homepage"]])
+        readme = fetch_readme(r.get("owner", {}).get("login", OWNER), r["name"])
+        h1 = re.match(r"\s*#\s+(.+)", readme)
+        title = h1.group(1).strip() if h1 else pretty_name(r["name"])
+        if h1:
+            readme = readme[h1.end():].lstrip()  # title is shown separately
         projects.append({
-            "t": pretty_name(r["name"]),
+            "t": title,
             "tech": tech,
             "d": desc,
             "long": desc,
             "built": [],
             "learned": "",
-            "readme": fetch_readme(r["name"]),
+            "readme": readme,
             "files": fetch_files(r),
             "links": links,
         })
@@ -112,6 +121,11 @@ def build_projects(repos):
 
 def main():
     repos = get("https://api.github.com/users/%s/repos?per_page=100&sort=updated" % OWNER)
+    for full in EXTRA_REPOS:
+        try:
+            repos.append(dict(get("https://api.github.com/repos/" + full), _extra=True))
+        except Exception:
+            print("Could not load", full)
     projects = build_projects(repos)
     OUT_FILE.write_text(json.dumps(projects, indent=2) + "\n", encoding="utf-8")
     print("Wrote %d projects to %s" % (len(projects), OUT_FILE))
